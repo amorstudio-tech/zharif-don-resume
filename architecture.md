@@ -2,104 +2,103 @@
 
 ## Build Shape
 
-Browser-local tool (static schematic map — read-only data display)
+Content-led site
 
 ## Stack Decision
 
-- Plain HTML + CSS + JavaScript (no framework, no build step).
-- Single `index.html` file (or minimal multi-file static site).
-- No Vite, no React, no npm packages — pure browser-side code.
-- SVG for the schematic map rendering.
-- `localStorage` only if needed for user preferences (e.g., last-viewed station).
+Default stack per KDBM Lite:
+- **Vite** — fast dev server and build
+- **React** — component-based UI
+- **Plain CSS** — no Tailwind in this session
+- No backend, database, auth, or `localStorage`
 
 ## Structure Overview
 
-A single-page application that:
-1. Loads static station, line, and POI data from inline JS/JSON.
-2. Renders an SVG schematic of RapidKL lines and station nodes.
-3. Shows a POI panel when a station is tapped/clicked.
-4. Adapts layout responsively for mobile and desktop.
+Single scrolling HTML page. Each major section is a React component. Interactive panels use React state (`useState`) for accordion expand/collapse.
 
 ## Component Map
 
-- **Map Canvas** — SVG element containing lines (paths) and station nodes (circles/rectangles with labels).
-- **Station Marker** — individual clickable station node on the SVG.
-- **POI Panel** — side panel or bottom sheet showing nearby POIs for the selected station.
-- **Line Legend / Toggle** — optional visual legend showing line colors and names (no filtering in v1).
+- `App` — root layout, renders all sections
+- `Hero` — name and title
+- `Bio` — short about-me paragraph
+- `Skills` — list of skill items, each expandable on click
+- `Experience` — job entries, each expandable on click
+- `Projects` — project entries, each expandable on click
+- `Education` — degree entries, each expandable on click
+- `Contact` — email link and social links (LinkedIn primary)
+- `BackToTop` — floating button, scrolls to top
+- `AccordionPanel` — reusable expand/collapse wrapper used by Skills, Experience, Projects, Education
 
 ## Data / State Model
 
-```js
-// Station
-{
-  id: "kj1",
-  name: "Kajang",
-  line: "mrt-kajang",
-  x: 100,
-  y: 200,
-  poiIds: ["poi-01", "poi-02"]
-}
-
-// Line
-{
-  id: "mrt-kajang",
-  name: "MRT Kajang Line",
-  color: "#006747",
-  stationIds: ["kj1", "kj2", ...]
-}
-
-// POI
-{
-  id: "poi-01",
-  name: "Kajang Town",
-  description: "Historic town center with famous satay.",
-  stationId: "kj1"
-}
-```
-
-State in v1: `selectedStationId` (null or a station id).
+- Section content stored as static JS arrays/objects in a `content.js` file
+- Accordion state managed per-section with `useState` tracking which panel index is open (or null)
+- No global state or context needed
 
 ## Storage Logic
 
-No user data to persist. `localStorage` is optional for remembering the last viewed station across page refreshes. All station/line/POI data is static and bundled in the source.
+None. No `localStorage`, no backend. Content is hardcoded sample data.
 
 ## User Flow
 
-1. User opens the page → sees the full RapidKL schematic.
-2. User taps/clicks a station marker → POI panel opens showing station name + 3-5 POIs.
-3. User taps another station or closes the panel → POI panel updates or closes.
-4. On mobile: the panel appears as a bottom drawer. On desktop: a side panel.
+1. Visitor opens page → Hero with name/title
+2. Scrolls down through Bio, Skills, Experience, Projects, Education
+3. Clicks any panel → it expands; clicking another collapses the first and opens the new one (or toggles the same one closed)
+4. Reaches Contact section → clicks LinkedIn link
+5. `BackToTop` button visible after scrolling past Hero
 
 ## File Expectations
 
 ```
-index.html          — HTML shell with embedded CSS and JS
-style.css           — all styles (or inlined in index.html)
-data.js             — static station, line, and POI data
-map.js              — SVG schematic rendering and interaction logic
-poi-panel.js        — POI panel open/close/update logic
+index.html          — Vite entry HTML
+src/
+  main.jsx          — React DOM root
+  App.jsx           — root component
+  components/
+    Hero.jsx
+    Bio.jsx
+    Skills.jsx
+    Experience.jsx
+    Projects.jsx
+    Education.jsx
+    Contact.jsx
+    BackToTop.jsx
+    AccordionPanel.jsx
+  content.js        — sample data arrays
+  styles/
+    global.css      — reset, base styles, variables
+    hero.css
+    bio.css
+    skills.css
+    education.css
+    experience.css
+    projects.css
+    contact.css
+    back-to-top.css
+    accordion-panel.css
+vite.config.js
+package.json
 ```
-
-All could be combined into a single `index.html` for simplicity.
 
 ## Constraints
 
-- Must work fully offline after first load.
-- No backend, no database, no API calls, no real-time data.
-- No external map tiles or map API — use hand-drawn or coordinate-based SVG.
-- SVGs must scale and pan on mobile without breaking touch interaction.
+- One page only — no React Router
+- All sample content — clearly labelled as sample if ambiguous
+- Accordion = single open at a time per section (or toggle closed)
+- Responsive — works on mobile down to 320px width
+- No external CSS frameworks or icon libraries
 
 ## Technical Non-Goals
 
-- Real-time transit data.
-- User accounts, auth, or payments.
-- Route planning / pathfinding between stations.
-- Animated train movement.
-- Search or filter in v1.
+- No backend, database, login, payments, live API
+- No multi-page routing
+- No animations library — CSS transitions only
+- No `localStorage`, cookies, or service workers
 
 ## Verification Notes
 
-- Open `index.html` directly in a browser — no dev server needed.
-- Test on a phone viewport (Chrome DevTools responsive mode).
-- Tap at least 3 different stations and verify POI panel content changes.
-- Verify the schematic is readable at 375px width.
+- `npm run dev` starts without errors
+- Page loads, all sections visible
+- Accordion panels expand/collapse on click
+- Layout passes mobile viewport check (320px+)
+- BackToTop button appears and works

@@ -1,39 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RapidKL Transit Map</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="map-title">RapidKL Transit Map</div>
-  <div id="map-container"></div>
-
-  <div class="map-legend" id="legend"></div>
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="data.js"></script>
-  <script src="map.js"></script>
-  <script src="poi-panel.js"></script>
-  <script>
-    (function() {
-      Map.initMap(document.getElementById('map-container'));
-      PoiPanel.initPanel();
-
-      var legend = document.getElementById('legend');
-      RAPIDKL_DATA.lines.forEach(function(line) {
-        var item = document.createElement('div');
-        item.className = 'map-legend-item';
-        var dot = document.createElement('span');
-        dot.className = 'map-legend-dot';
-        dot.style.background = line.color;
-        item.appendChild(dot);
-        item.appendChild(document.createTextNode(line.name));
-        legend.appendChild(item);
-      });
-    })();
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Zharif Don — Professional Resume" />
+    <title>Zharif Don — Resume</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

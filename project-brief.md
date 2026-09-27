@@ -2,70 +2,62 @@
 
 ## Project Identity
 
-Interactive Schematic Map for RapidKL
+Zharif Don — Professional Resume Site
 
 ## One-Sentence Concept
 
-A browser-based interactive schematic map of the RapidKL transit network where daily commuters can view the overall system and tap a station to discover nearby points of interest and simple station-based navigation.
+A single-page professional resume website for Zharif Don, with accordion-style interactive panels that expand on click to reveal details about skills, experience, projects, and education — built for general professional networking.
 
 ## Target User
 
-Daily RapidKL commuters who want to learn about local attractions and POIs near stations.
+General professional network — recruiters, hiring managers, collaborators, and peers who want a quick scan of Zharif Don's background with the option to drill into details.
 
 ## User Goal
 
-- View the full RapidKL schematic map (MRT, LRT, Monorail lines).
-- Tap a station to see nearby POIs and simple navigation info from that station.
-- Use on both mobile and desktop.
+Visitors land on the page, get an immediate impression of who Zharif Don is, browse sections, click panels that interest them to read more, and leave with a clear sense of his professional profile and how to contact him.
 
 ## Build Shape
 
-Browser-local tool
+Content-led site
 
 ## Shape Confirmation
 
-Confirmed by learner on 2026-09-21.
+Confirmed by learner.
 
 ## Version-One Success
 
-- Single-page schematic showing RapidKL lines (MRT Kajang, MRT Putrajaya, LRT Kelana Jaya, LRT Ampang/Sri Petaling, KL Monorail).
-- Tap any station to see 3-5 sample POIs with a short description.
-- Works and looks good on mobile and desktop.
-- Station data is static (no real-time tracking).
+One scrolling page with all sections present, accordion panels working on click, professional look, and responsive layout.
 
 ## Now / Later / Never
 
 ### Now
 
-- Static schematic map with RapidKL lines and stations.
-- Tap a station to show nearby POIs.
-- Responsive mobile-first layout.
-- Sample POI data (3-5 per station).
+- Single scrolling page
+- Sections: Bio, Skills, Experience, Projects, Education, Contact
+- Accordion expand/collapse on interactive panels
+- Sample/filler content
+- Responsive layout + mobile check
 
 ### Later
 
-- Search or filter stations/lines.
-- Route planning between stations.
-- More detailed POI info (images, links).
+- Replace filler with real content
+- Custom domain
+- Contact form (if desired)
 
 ### Never
 
-- Real-time train tracking.
-- User accounts or authentication.
-- Backend or database.
-- Paid features.
+- Backend, database, login, or multi-page routing
 
 ## Assumptions
 
-- All station coordinates and POI data can be sourced from public/open data (Wikipedia, Google Maps public info, etc.) and included as static sample data.
-- The schematic can be drawn using SVG or Canvas — no map tile API needed.
-- The app must work fully offline after first load.
+- All content fits comfortably on a single page
+- No server-side processing needed
+- Browser-only, no installs required for visitors
 
 ## Proof Target
 
-A working HTML file (or simple static site) opened in a browser showing a readable RapidKL schematic with interactive station POI popups.
+Open the page in a browser — sections render, accordion panels expand/collapse on click, layout is responsive on mobile width.
 
 ## Trainer / Learner Notes
 
-- RapidKL lines to include: MRT Kajang Line, MRT Putrajaya Line, LRT Kelana Jaya Line, LRT Ampang/Sri Petaling Line, KL Monorail.
-- Sample POIs: 3-5 per selected station (e.g., KLCC station → Suria KLCC, Petronas Towers, KLCC Park).
+Planning phase only so far. No app code, no packages, no scaffolding yet.

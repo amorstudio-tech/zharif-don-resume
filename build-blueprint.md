@@ -2,144 +2,215 @@
 
 ## Source Files
 
-- `project-brief.md` — project identity, user, scope, success target.
-- `architecture.md` — stack, structure, data model, file layout.
-- `design.md` — Apple-like premium minimal inspiration, layout/color/typography rules.
-- `build-status.md` — current phase, completed work, blockers, next instruction.
+- `project-brief.md`
+- `architecture.md`
+- `design.md`
+- `build-status.md`
 
 ## Project Identity
 
-Interactive Schematic Map for RapidKL
+Zharif Don — Professional Resume Site
 
 ## Build Shape
 
-Browser-local tool (static data display — not a CRUD tool)
+Content-led site
 
 ## Version-One Promise
 
-A single-page static HTML/CSS/JS app that renders an SVG schematic map of RapidKL transit lines (MRT Kajang, MRT Putrajaya, LRT Kelana Jaya, LRT Ampang/Sri Petaling, KL Monorail). User taps a station to see 3-5 nearby POIs in a bottom sheet (mobile) or right sidebar (desktop). Works offline, looks calm and minimal.
+A single-page professional resume for Zharif Don with expandable accordion panels for Skills, Experience, Projects, and Education sections. Visitors scroll through Hero, Bio, Skills, Experience, Projects, Education, and Contact — clicking any panel expands its details (single-open accordion per section). A BackToTop button appears on scroll. The page is responsive down to 320px. All content is sample/filler, ready to replace later.
 
 ## Scope Lock
 
 ### Now
 
-- Static SVG schematic with all 5 transit lines and sample stations.
-- Tap station → POI panel with 3-5 sample POIs per station.
-- Bottom sheet on mobile, right sidebar on desktop.
-- Responsive, works at 375px width.
-- Pure HTML/CSS/JS — no build tools.
+- Single scrolling page, all 6 sections (Hero, Bio, Skills, Experience, Projects, Education, Contact)
+- Accordion expand/collapse (one open at a time per section, toggle to close)
+- Sample/filler content in each section
+- BackToTop button (appears on scroll)
+- Responsive layout with mobile check at 320px
+- LinkedIn link as primary action
 
 ### Later
 
-- Search/filter stations.
-- Route planning between stations.
-- More detailed POI data.
+- Replace filler content with real data
+- Custom domain
+- Contact form or email link
 
 ### Never
 
-- Real-time tracking.
-- User accounts or auth.
-- Backend or database.
-- Paid features.
-- Live APIs.
+- Backend, database, login, multi-page routing, live API, auth, payments
 
 ## Architecture Summary
 
-- **Stack:** Plain HTML + CSS + JavaScript in a single `index.html` (or minimal separate files).
-- **Rendering:** SVG elements drawn from static data.
-- **State:** `selectedStationId` — tracked in JS, no persistence needed.
-- **Data:** Static JSON bundled in `data.js` — stations, lines, POIs.
-- **Layout:** Full-viewport SVG map, bottom sheet (mobile) or right sidebar (desktop).
+- **Stack:** Vite + React + plain CSS (no Tailwind)
+- **Structure:** Single-page app with one component per section
+- **Accordion:** `useState` per section tracking which panel index is open (or `null`)
+- **Data:** Static JS arrays/objects in `content.js`
+- **No storage:** No `localStorage`, no backend
+- **Navigation:** BackToTop only (no sticky nav bar)
 
 ## Data / State / Storage Rules
 
-- All data is static and bundled in the source — no fetch, no API, no backend.
-- Station data: `{ id, name, line, x, y, poiIds[] }`
-- Line data: `{ id, name, color, stationIds[] }`
-- POI data: `{ id, name, description, stationId }`
-- State: only `selectedStationId` (null or string).
-- No `localStorage` required in v1.
-- No CRUD — read-only display of pre-bundled data.
+- All content is static and hardcoded in `src/content.js`
+- Each section with accordion has its own `useState` — `openIndex` (number or null)
+- Clicking a panel: if same index → set to `null` (close); if different → set to new index
+- No global state, no context, no storage
 
 ## Design Direction Summary
 
-- **Borrow from Apple-like premium minimal:** clean spacious layout, generous white space, minimal neutral palette, system font stack, subtle transitions.
-- **Do not copy:** Apple brand/logo/text/identity. No heavy glassmorphism, no Apple UI patterns.
-- **Visual mood:** Calm and minimal — the map is the hero, UI recedes.
-- **Line colors:** Official RapidKL colors (green, red, blue, orange, green for monorail).
-- **Mobile:** Bottom sheet at ~40% viewport on station tap.
-- **Desktop:** Right sidebar ~320px on station tap.
+**Inspiration:** Apple-like premium minimal (fallback).
+**Borrow:** abundant whitespace, clean system sans-serif, centered hero, subtle shadows/rounded corners, premium/professional feel, neutral background with blue accent (`#0071e3`).
+**Do not copy:** Apple branding, logos, product images, device mockups, hero sliders, "Designed by Apple" language.
 
 ## Implementation Rules
 
-- Always use system font stack: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`.
-- Background `#F5F5F7`, text `#1D1D1F` / `#86868B`.
-- Station nodes: 8px filled circles with official line color.
-- Selected station: 8px circle + 4px blue `#007AFF` ring.
-- Line paths: 3px solid stroke, rounded caps.
-- POI panel (mobile): rounded top corners (12px), handle bar, light shadow.
-- POI panel (desktop): same style but full-height right sidebar.
-- Min tap target: 44px.
-- All interactive elements must pass 4.5:1 contrast ratio.
-- `aria-label` on every station node.
-- Escape key closes POI panel.
-- No fake logos, testimonials, stats, or lorem ipsum.
+1. Use Vite default React template conventions
+2. One component per file in `src/components/`
+3. Plain CSS only — one file per component in `src/styles/`
+4. All sample content in `src/content.js`
+5. Accordion: CSS `max-height` transition with a class toggle — no JS animation libraries
+6. Every interactive element must be keyboard accessible (focus visible, Enter/Space toggle)
+7. Accordion panels: `aria-expanded`, `aria-controls`, `id` matching
+8. Touch targets: minimum 44px
+9. Skip-to-content link (visually hidden until focused)
+10. Test at 320px width after each work card
+11. BackToTop: appears after scrolling past hero, smooth scroll to top
 
 ## File and Folder Expectations
 
 ```
-/
-├── index.html          — HTML shell + embedded CSS + JS (or linked files)
-├── data.js             — static station, line, and POI data
-├── map.js              — SVG rendering and interaction logic
-├── poi-panel.js        — bottom sheet / sidebar logic
-├── style.css           — all styles
-├── project-brief.md
-├── architecture.md
-├── design.md
-├── build-blueprint.md
-├── build-status.md
-├── work-cards/
-│   └── 00-setup-gate.md
-└── prompts/
-    └── ... (coach prompts)
+index.html
+src/
+  main.jsx
+  App.jsx
+  components/
+    Hero.jsx
+    Bio.jsx
+    Skills.jsx
+    Experience.jsx
+    Projects.jsx
+    Education.jsx
+    Contact.jsx
+    BackToTop.jsx
+    AccordionPanel.jsx
+  content.js
+  styles/
+    global.css
+    hero.css
+    bio.css
+    skills.css
+    education.css
+    experience.css
+    projects.css
+    contact.css
+    back-to-top.css
+    accordion-panel.css
+vite.config.js
+package.json
 ```
 
 ## Work Card Plan
 
-1. **Work Card 01** — Create `data.js` with static station, line, and POI data (sample stations across all 5 lines, 3-5 POIs per station).
-2. **Work Card 02** — Create `style.css` with the full design system: colors, typography, layout, responsive rules, bottom sheet styles, sidebar styles.
-3. **Work Card 03** — Create `map.js` with SVG schematic rendering: draw line paths, draw station nodes, handle click/tap to select, emit selectedStationId.
-4. **Work Card 04** — Create `poi-panel.js` with bottom sheet (mobile) and right sidebar (desktop) logic: open/close, render POI list, close on Escape and X button.
-5. **Work Card 05** — Create `index.html` assembling all pieces, add `index.html`, test full flow on mobile and desktop, verify all verification steps.
-6. **Work Card 06** — Review pass: run review-mirror, fix the single smallest useful issue.
+### Work Card 01 — Project scaffold
+
+- `npm create vite@latest` with React template
+- Remove default Vite boilerplate (counter, logos, etc.)
+- Create `src/styles/global.css` with reset and CSS variables
+- Create empty component files with placeholder exports
+- Create `src/content.js` with sample data arrays
+- Verify `npm run dev` starts cleanly
+
+### Work Card 02 — Hero and Bio
+
+- Implement `Hero.jsx` — name, title, tagline
+- Implement `Bio.jsx` — short bio paragraph
+- Create corresponding CSS files per design.md
+- Verify renders correctly
+
+### Work Card 03 — AccordionPanel component
+
+- Build reusable `AccordionPanel.jsx` with:
+  - Click to toggle open/closed
+  - `aria-expanded`, `aria-controls`
+  - CSS `max-height` transition for smooth open/close
+  - Left accent-blue border when open
+- Create `accordion-panel.css`
+- Test standalone behavior
+
+### Work Card 04 — Skills section
+
+- Implement `Skills.jsx` using `AccordionPanel` for each skill
+- Single-open accordion state
+- `skills.css`
+- Verify expand/collapse works
+
+### Work Card 05 — Experience section
+
+- Implement `Experience.jsx` with accordion for each job
+- `experience.css`
+- Verify
+
+### Work Card 06 — Projects section
+
+- Implement `Projects.jsx` with accordion for each project
+- `projects.css`
+- Verify
+
+### Work Card 07 — Education section
+
+- Implement `Education.jsx` with accordion for each degree
+- `education.css`
+- Verify
+
+### Work Card 08 — Contact and BackToTop
+
+- Implement `Contact.jsx` — LinkedIn link, email, social links with outlined button style
+- Implement `BackToTop.jsx` — visibility on scroll, smooth scroll to top
+- `contact.css`, `back-to-top.css`
+- Verify both work
+
+### Work Card 09 — Polish and responsive check
+
+- Wire all sections into `App.jsx`
+- Add skip-to-content link
+- Test and fix at 320px
+- Verify keyboard navigation through all accordions
+- Verify BackToTop appears and works
+- Final mobile + desktop proof
 
 ## Review Mirror
 
-After Build, run the Check phase (prompts/07-review-mirror.md) and fix the single smallest useful issue before Ship.
+After each work card, before marking it complete:
+1. Does it match the design rules in `design.md`?
+2. Are there any hardcoded test values that should be removed?
+3. Does it pass mobile 320px?
+4. Are interactive elements keyboard-accessible?
+5. Does `npm run dev` still work?
 
 ## Proof Ladder
 
-1. `index.html` opens in browser → schematic renders.
-2. Tap a station → bottom sheet (mobile) or sidebar (desktop) shows POIs.
-3. Tap another station → POI content changes.
-4. Close panel → map is full-screen again.
-5. Test at 375px width → schematic readable, tap targets work.
-6. Verify line colors match RapidKL scheme.
+1. `npm run dev` starts without errors
+2. All 6 sections render on the page
+3. Accordion panels expand/collapse per section (single-open)
+4. Page is readable and functional at 320px width
+5. BackToTop appears, scrolls to top
+6. Contact LinkedIn link is clickable and goes to LinkedIn
+7. All interactive elements are keyboard-accessible
+8. `design.md` checks pass (colors, spacing, typography, contrast)
 
 ## 60-Second Explanation Template
 
-"This is a static interactive map of the RapidKL transit network made with plain HTML, CSS, and SVG. Tap any station to see nearby points of interest. No backend, no API — everything runs in the browser from bundled sample data."
+"This is a single-page React resume site for Zharif Don. It has sections for Bio, Skills, Experience, Projects, Education, and Contact. Each section with expandable content uses accordion panels — click to open, click again to close, only one open at a time. A BackToTop button appears when you scroll down. It uses Vite + React + plain CSS with a clean minimal Apple-inspired look and a blue accent. Everything is sample content ready to be replaced."
 
 ## Guardrails for the Coding Agent
 
-- read `build-status.md`, `build-blueprint.md`, and the current work card before editing;
-- implement only the current work card;
-- do not jump ahead;
-- stop after verification;
-- update `build-status.md` after each work card;
-- do not add backend/auth/database/API unless the blueprint explicitly allows it;
-- do not add secrets or keys to code;
-- do not invent claims, testimonials, logos, or real numbers.
-- apply the guardrails for the confirmed build shape;
-- if a legacy file uses `Build Mode`, treat it as `Build Shape` without stopping;
+- Read `build-status.md`, `build-blueprint.md`, and the current work card before editing
+- Implement only the current work card
+- Do not jump ahead
+- Stop after verification
+- Update `build-status.md` after each work card
+- Do not add backend/auth/database/API — the blueprint does not allow it
+- Do not add secrets or keys to code
+- Do not invent claims, testimonials, logos, or real numbers
+- Apply content-led site guardrails: single page, factual content, one primary action, responsive, no invented metrics
+- If a legacy file uses `Build Mode`, treat it as `Build Shape` without stopping

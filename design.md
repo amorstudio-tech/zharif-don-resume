@@ -2,99 +2,96 @@
 
 ## Design Inspiration URL
 
-Fallback choice: Apple-like premium minimal style.
+Apple-like premium minimal (fallback choice — no designmd.ai URL)
 
 ## What We Borrow
 
-- Clean, spacious layout with generous white space.
-- Minimal color palette — mostly neutrals with subtle accents.
-- Simple, elegant typography (system font stack).
-- Smooth but subtle transitions (no heavy animations).
-- Bottom sheet pattern on mobile (inspired by Apple Maps POI cards).
+- Abundant whitespace and breathing room between sections
+- Clean sans-serif typography with generous letter-spacing on headings
+- Centered hero with name as the primary focal point
+- Subtle shadows and rounded corners on cards/panels
+- Focused, premium, professional overall vibe
 
 ## What We Do Not Copy
 
-- No Apple brand, logo, text, or identity.
-- No skeuomorphic gradients or heavy glassmorphism.
-- No tab bars, toolbars, or navigation patterns from Apple products.
+- No Apple branding, logos, product images, or claims
+- No Apple-specific layout patterns (no device mockups, no hero sliders)
+- No exact copy of any Apple page structure
+- No "Designed by Apple" language or iconography
 
 ## Visual Mood
 
-Calm and minimal. The map is the hero — UI is secondary, light, and recedes. Soft grays, clean lines, and plenty of breathing room.
+Premium, minimal, professional, focused. Neutral background with a restrained blue accent used only for interactive elements (panel borders, hover states, links).
 
 ## Layout Rules
 
-- Full-page SVG schematic fills the viewport.
-- Mobile: bottom sheet slides up on station tap, overlays ~40% of viewport height.
-- Desktop: right sidebar (~320px wide) opens beside the map when a station is selected.
-- No persistent header or navigation bar — the map is the interface.
-- Minimal top bar only if needed for project name / tagline.
+- Max content width: 720px centered
+- Sections separated by generous vertical spacing (4rem–6rem)
+- Hero: centered, name in large light weight, subtitle below
+- Each section has a left-aligned heading with a thin accent line beneath
+- Cards/Panels: full-width within the content column, subtle border, light shadow
+- BackToTop: fixed bottom-right, circular, no text — just a subtle arrow icon
 
 ## Color / Contrast Rules
 
-- Background: off-white `#F5F5F7` (Apple-like light gray).
-- Map surface: white `#FFFFFF`.
-- Text: dark gray `#1D1D1F` (primary), `#86868B` (secondary).
-- Line colors per RapidKL official scheme:
-  - MRT Kajang: `#006747`
-  - MRT Putrajaya: `#D32F2F` (or official red)
-  - LRT Kelana Jaya: `#0089C7`
-  - LRT Ampang/Sri Petaling: `#E57200`
-  - KL Monorail: `#00985F`
-- Accent/interactive: blue tint `#007AFF` for selected/hover states.
-- POI panel background: white with subtle shadow.
-- All interactive elements must pass 4.5:1 contrast ratio against their background.
+- Background: `#fafafa` (off-white)
+- Card/surface: `#ffffff`
+- Text primary: `#1d1d1f` (near-black)
+- Text secondary: `#6e6e73` (muted gray)
+- Accent: blue `#0071e3` (Apple-style blue) — used for panel borders, hover states, link color, BackToTop
+- Panel border: `#d2d2d7` (light gray)
+- All text/background pairs pass WCAG AA contrast
 
 ## Typography Feel
 
-- System font stack: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`.
-- Station labels: 11-13px medium weight, monochrome.
-- POI panel headings: 16-18px semibold.
-- POI descriptions: 13-14px regular, light gray.
+- System font stack: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+- Hero name: 2.5rem, font-weight 300 (light)
+- Section headings: 1.5rem, font-weight 600 (semibold), letter-spacing: -0.01em
+- Body: 1rem, font-weight 400, line-height 1.6
+- Panel titles: 1.05rem, font-weight 500
 
 ## Component Style
 
-- **Station nodes:** small filled circles (8px radius). Selected station gets a ring/halo (blue).
-- **Station labels:** text next to node, 12px, centered, no background box.
-- **Line paths:** 3px solid stroke with official line color, rounded caps.
-- **POI panel (mobile):** rounded top corners (12px), handle bar at top, light shadow, scrollable content.
-- **POI panel (desktop):** same style but as a right sidebar with full height.
-- **POI cards:** minimal — icon/emoji + name + one-line description, separated by thin dividers.
-- **Close button:** subtle X icon, top-right corner of panel.
+- **AccordionPanel:** White card with 1px `#d2d2d7` border, 8px border-radius, 2px accent-blue left border when open, smooth max-height CSS transition, padding 1rem inside
+- **BackToTop:** 40px circle, `#0071e3` background, white arrow, fixed bottom-right 1.5rem, appears after scrolling past hero
+- **Contact:** Social link buttons — outlined style with accent-blue border, rounded, icon + label
+- **Section headings:** Left-aligned, underline accent bar (2px `#0071e3`, 40px wide, margin-bottom 0.5rem)
 
 ## Mobile Rules
 
-- Schematic must be readable at 375px width.
-- Bottom sheet height: ~40% viewport by default, draggable up to ~80%.
-- Bottom sheet slides up smoothly (300ms ease-out).
-- Station nodes must be large enough to tap on mobile (min 44px tap target).
-- No horizontal scrolling for the map — use pan and pinch-to-zoom if needed (v1: manual SVG viewBox scaling).
+- Max-width on mobile: full-width with 1rem padding on each side
+- Hero name: scales down to 2rem on screens under 480px
+- Section spacing: reduced to 2.5rem
+- Accordion panels: full width, no side margins
+- BackToTop: 36px circle, bottom-right 1rem
+- Touch targets: minimum 44px for any clickable area
+- Test at 320px width
 
 ## Accessibility Basics
 
-- All interactive stations are focusable and keyboard-accessible.
-- `aria-label` on each station node (e.g., "Kajang station, MRT Kajang Line").
-- POI panel content uses semantic HTML.
-- Close panel via Escape key.
-- Minimum 4.5:1 text contrast ratio.
+- Semantic HTML (`<header>`, `<section>`, `<h1>`–`<h2>`)
+- All interactive elements keyboard-accessible (focus visible, Enter/Space to toggle)
+- Accordion panels use `aria-expanded` and `aria-controls`
+- Skip-to-content link (visually hidden, visible on focus)
+- Color not the only indicator of state (panel open also uses border highlight + content visibility)
 
 ## Anti-Slop Rules
 
-- No fake logos.
-- No fake testimonials.
-- No fake stats unless clearly marked sample.
-- No "lorem ipsum" in final proof.
-- One clear primary action: tap a station.
-- Readable on phone width.
-- All data is static — clearly sample/illustrative.
+- No fake logos
+- No fake testimonials
+- No fake stats — sample data is clearly placeholder
+- No "lorem ipsum" in final proof — sample content reads like real resume text even if fictional
+- One clear primary action: LinkedIn link in Contact
+- Readable on phone width (320px tested)
+- No generic stock photos or avatars
 
 ## Design Verification Checklist
 
-- [ ] Map is readable at 375px width.
-- [ ] Station tap target is at least 44px on mobile.
-- [ ] Bottom sheet opens smoothly on mobile.
-- [ ] Side panel opens on desktop.
-- [ ] Line colors match RapidKL official scheme.
-- [ ] POI content changes per station selection.
-- [ ] Close panel works (X button, Escape key, tap outside).
-- [ ] Minimum 4.5:1 contrast ratio on all text.
+- [ ] Hero renders centered with name and subtitle
+- [ ] Section rhythm is consistent — headings, accent bar, content
+- [ ] Accordion panels have border, shadow, open state with blue left border
+- [ ] BackToTop appears after scroll and is functional
+- [ ] Contact links are styled and clickable
+- [ ] Mobile 320px: no overflow, text is readable, touch targets ≥44px
+- [ ] Color contrast passes WCAG AA
+- [ ] Keyboard navigation works through all accordion panels
